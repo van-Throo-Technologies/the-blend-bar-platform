@@ -1,0 +1,3 @@
+import Link from 'next/link'
+import { Logo } from '@/components/ui/logo'
+export function CustomerNav(){return <header className="border-b border-[#203e33]/10 bg-[#fffdf8]"><div className="shell flex min-h-20 items-center justify-between gap-5"><Logo/><nav className="hidden gap-6 text-sm md:flex"><Link href="/my-blend-bar">Home</Link><Link href="/my-blend-bar/assessment">Hair Need</Link><Link href="/my-blend-bar/workshop">Workshop</Link></nav><form action="/api/signout" method="post"><button className="rounded-full border border-[#203e33]/15 px-4 py-2 text-sm">Sign out</button></form></div></header>}
