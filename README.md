@@ -135,7 +135,8 @@ Do not commit `.env.local`.
 - Landing page copy: `app/(public)/page.tsx`
 - Workshop content/video placeholders: `app/(customer)/my-blend-bar/workshop/page.tsx`
 - Purchase email: `emails/purchase-welcome.tsx`
-- Assessment questions: `components/assessment-form.tsx`
+- Hair Need Journey copy, chapters and question order: `lib/assessment/journey.ts` (client-safe content only; no scoring)
+- Hair Need Journey UI: `components/hair-need-journey.tsx` (state, progress, submission) and `components/hair-need-journey-screens.tsx` (screens)
 - Input validation: `lib/assessment/schema.ts`
 - Protected decision engine: `lib/assessment/engine.ts`
 

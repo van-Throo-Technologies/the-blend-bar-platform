@@ -1,2 +1,18 @@
 'use client'
-export default function ErrorPage({reset}:{error:Error&{digest?:string};reset:()=>void}){return <div className="shell py-24 text-center"><div className="eyebrow">Something went wrong</div><h1 className="display mt-4 text-4xl">We could not complete that step.</h1><p className="mx-auto mt-4 max-w-xl leading-7 text-[#203e33]/65">Your information has not been intentionally discarded. Please retry the action. If the problem persists, return to My Blend Bar.</p><div className="mt-7 flex justify-center gap-3"><button onClick={reset} className="rounded-full bg-[#203e33] px-5 py-3 text-sm font-semibold text-white">Try again</button><a href="/my-blend-bar" className="rounded-full border border-[#203e33]/20 px-5 py-3 text-sm font-semibold">My Blend Bar</a></div></div>}
+
+export default function ErrorPage({ reset }: { error: Error & { digest?: string }; reset: () => void }) {
+  return (
+    <div className="shell py-28 text-center">
+      <p className="eyebrow">Something went wrong</p>
+      <span aria-hidden className="rule-gold mx-auto mt-5" />
+      <h1 className="display mt-6 text-4xl">We could not complete that step.</h1>
+      <p className="muted mx-auto mt-4 max-w-xl leading-7">
+        Your information has not been intentionally discarded. Please retry the action. If the problem persists, return to My Blend Bar.
+      </p>
+      <div className="mt-9 flex flex-wrap justify-center gap-3">
+        <button onClick={reset} className="btn">Try again</button>
+        <a href="/my-blend-bar" className="btn-ghost">My Blend Bar</a>
+      </div>
+    </div>
+  )
+}

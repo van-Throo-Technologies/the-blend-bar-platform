@@ -1,30 +1,211 @@
 @import "tailwindcss";
 
+/* ============================================================
+   THE BLEND BAR — PREMIUM FORMULATION ATELIER
+   One palette, surface-scoped semantic tokens. Components never
+   hard-code colour: they read tokens, so contrast is correct on
+   every surface by construction.
+   ============================================================ */
+
 :root {
-  --cream: #f6f0e6;
-  --ink: #1f2924;
-  --forest: #203e33;
-  --sage: #aab8a6;
-  --clay: #b9785b;
-  --gold: #c69d58;
-  --paper: #fffdf8;
+  /* Core palette — the only colours in the system */
+  --green: #1B5E4B;
+  --green-deep: #164C3D;
+  --gold: #B7791F;
+  --ivory: #F9F6EF;
+  --cloud: #F9FAFB;
+  --charcoal: #1F2933;
+  --slate: #4B5563;
+  --white: #FFFFFF;
+
+  /* Semantic tokens — default editorial (warm ivory) surface */
+  --surface: var(--ivory);
+  --surface-raised: var(--white);
+  --text: var(--charcoal);            /* 13.7:1 on ivory */
+  --text-muted: var(--slate);         /* 6.9:1 on ivory  */
+  --rule: color-mix(in srgb, var(--charcoal) 14%, transparent);
+  --rule-strong: color-mix(in srgb, var(--charcoal) 30%, transparent);
+  /* Control boundaries must reach 3:1 against their surface (WCAG 1.4.11) */
+  --control-border: color-mix(in srgb, var(--charcoal) 55%, transparent);
+  --mark: var(--green);               /* small marks/icons on light */
+  --focus: var(--gold);               /* 3.4:1 vs ivory — non-text, AA */
+  --selected: color-mix(in srgb, var(--green) 7%, var(--white));
+  --btn-bg: var(--green);
+  --btn-fg: var(--white);             /* 7.6:1 */
+  --btn-bg-hover: var(--green-deep);
+  --btn-ghost-fg: var(--green-deep);
+  --btn-ghost-border: var(--rule-strong);
+
+  --radius: 2px;
+  --serif: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+  --sans: system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
 }
+
+/* Clean science/assessment surfaces.
+   These reset the FULL light token set, so a light block nested inside a deep
+   block (e.g. the sign-in form on the deep-green auth page) never inherits
+   ivory text onto white. */
+[data-surface="clean"],
+[data-surface="cloud"] {
+  --surface: var(--white);
+  --surface-raised: var(--cloud);
+  --text: var(--charcoal);
+  --text-muted: var(--slate);
+  --rule: color-mix(in srgb, var(--charcoal) 14%, transparent);
+  --rule-strong: color-mix(in srgb, var(--charcoal) 30%, transparent);
+  --control-border: color-mix(in srgb, var(--charcoal) 55%, transparent);
+  --mark: var(--green);
+  --focus: var(--gold);
+  --selected: color-mix(in srgb, var(--green) 7%, var(--white));
+  --btn-bg: var(--green);
+  --btn-fg: var(--white);
+  --btn-bg-hover: var(--green-deep);
+  --btn-ghost-fg: var(--green-deep);
+  --btn-ghost-border: var(--rule-strong);
+}
+[data-surface="cloud"] {
+  --surface: var(--cloud);
+  --surface-raised: var(--white);
+}
+
+/* Deep green — hero, transitions, reveals, arrivals.
+   Never place dark text on these surfaces: tokens flip to ivory. */
+[data-surface="deep"],
+[data-surface="green"] {
+  --surface: var(--green-deep);
+  --surface-raised: color-mix(in srgb, var(--white) 7%, transparent);
+  --text: var(--ivory);               /* 9.9:1 on deep green */
+  --text-muted: color-mix(in srgb, var(--ivory) 82%, transparent); /* 5.2:1 */
+  --rule: color-mix(in srgb, var(--ivory) 22%, transparent);
+  --rule-strong: color-mix(in srgb, var(--ivory) 45%, transparent);
+  --control-border: color-mix(in srgb, var(--ivory) 60%, transparent);
+  --mark: var(--ivory);
+  --focus: var(--ivory);              /* gold fails on green; ivory is 7.1:1 */
+  --selected: color-mix(in srgb, var(--ivory) 14%, transparent);
+  --btn-bg: var(--ivory);
+  --btn-fg: var(--green-deep);        /* 7.1:1 */
+  --btn-bg-hover: var(--white);
+  --btn-ghost-fg: var(--ivory);
+  --btn-ghost-border: color-mix(in srgb, var(--ivory) 45%, transparent);
+}
+[data-surface="green"] { --surface: var(--green); }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
-  background: var(--cream);
-  color: var(--ink);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--ivory);
+  color: var(--charcoal);
+  font-family: var(--sans);
+  font-synthesis-weight: none;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
-::selection { background: #d9c69f; color: #1f2924; }
+::selection { background: color-mix(in srgb, var(--gold) 35%, transparent); color: var(--charcoal); }
 a { color: inherit; text-decoration: none; }
-button, input, select, textarea { font: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
 
-.display { font-family: Georgia, 'Times New Roman', serif; }
-.shell { width: min(1180px, calc(100% - 32px)); margin-inline: auto; }
-.card { background: rgba(255,253,248,.88); border: 1px solid rgba(32,62,51,.12); box-shadow: 0 18px 50px rgba(31,41,36,.06); }
-.eyebrow { text-transform: uppercase; letter-spacing: .16em; font-size: .72rem; font-weight: 700; color: var(--forest); }
-.focus-ring:focus-visible { outline: 3px solid rgba(198,157,88,.5); outline-offset: 3px; }
+/* ---------- Layout ---------- */
+.shell { width: min(1180px, calc(100% - 40px)); margin-inline: auto; }
+.surface { background: var(--surface); color: var(--text); }
+
+/* ---------- Typography ---------- */
+.display { font-family: var(--serif); font-weight: 400; letter-spacing: -0.015em; }
+.eyebrow {
+  font-family: var(--sans);
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  font-size: .6875rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+.muted { color: var(--text-muted); }
+
+/* ---------- Details: gold behaves like jewellery ---------- */
+.rule-gold { display: block; height: 1px; width: 3rem; background: var(--gold); border: 0; }
+.hairline { border-color: var(--rule); }
+
+/* ---------- Surfaces ---------- */
+.plate { background: var(--surface-raised); border: 1px solid var(--rule); border-radius: var(--radius); }
+/* Legacy alias so untouched views inherit the flat editorial treatment. */
+.card { background: var(--surface-raised); border: 1px solid var(--rule); border-radius: var(--radius); box-shadow: none; }
+
+/* ---------- Controls ---------- */
+.btn, .btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  min-height: 3.25rem;
+  padding-inline: 1.75rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: .01em;
+  border: 1px solid transparent;
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+.btn { background: var(--btn-bg); color: var(--btn-fg); }
+.btn:hover:not(:disabled) { background: var(--btn-bg-hover); }
+.btn-ghost { background: transparent; color: var(--btn-ghost-fg); border-color: var(--btn-ghost-border); }
+.btn-ghost:hover:not(:disabled) { border-color: currentColor; }
+.btn:disabled, .btn-ghost:disabled {
+  background: var(--cloud);
+  color: var(--slate);              /* 7.2:1 on cloud */
+  border-color: var(--control-border);
+  cursor: not-allowed;
+}
+[data-surface="deep"] .btn:disabled, [data-surface="deep"] .btn-ghost:disabled,
+[data-surface="green"] .btn:disabled, [data-surface="green"] .btn-ghost:disabled {
+  background: transparent;
+  color: var(--text-muted);
+  border-color: var(--rule-strong);
+}
+.btn-small { min-height: 2.75rem; padding-inline: 1.25rem; font-size: .875rem; }
+.link-quiet { color: var(--text-muted); transition: color .18s ease; }
+.link-quiet:hover { color: var(--text); }
+
+/* ---------- Answer options: flat plates, green marker when chosen ---------- */
+.option {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  min-height: 4rem;
+  padding: 1rem 1.25rem;
+  background: var(--surface-raised);
+  border: 1px solid var(--rule);
+  border-left: 3px solid transparent;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color .18s ease, background-color .18s ease;
+}
+.option:hover { border-color: var(--rule-strong); }
+.option:has(:checked) { background: var(--selected); border-color: var(--rule-strong); border-left-color: var(--green); }
+[data-surface="deep"] .option:has(:checked), [data-surface="green"] .option:has(:checked) { border-left-color: var(--ivory); }
+.option:has(:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+.option input { accent-color: var(--green); }
+
+/* ---------- Focus ---------- */
+.focus-ring:focus-visible,
+.btn:focus-visible,
+.btn-ghost:focus-visible,
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+/* ---------- Form fields ---------- */
+.field {
+  width: 100%;
+  background: var(--surface-raised);
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius);
+  padding: .875rem 1rem;
+  min-height: 3rem;
+  color: var(--text);
+}
+.field:focus { border-color: var(--green); outline: 2px solid var(--focus); outline-offset: 2px; }
+.field::placeholder { color: var(--text-muted); }

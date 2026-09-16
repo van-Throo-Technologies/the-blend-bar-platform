@@ -1,6 +1,68 @@
 import { redirect } from 'next/navigation'
-import { PlayCircle, PackageCheck, Beaker, ShieldCheck } from 'lucide-react'
+import { Beaker, PackageCheck, PlayCircle, ShieldCheck } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { getConditionerEntitlement } from '@/lib/commerce/entitlement'
 
-export default async function Page(){const supabase=await createClient();const {data:{user}}=await supabase.auth.getUser();if(!user)redirect('/login');if(!await getConditionerEntitlement(user.id))redirect('/my-blend-bar');return <div className="shell py-12"><div className="eyebrow">Conditioner Edition</div><h1 className="display mt-3 max-w-3xl text-4xl sm:text-5xl">Prepare first. Blend with intention.</h1><p className="mt-4 max-w-3xl leading-7 text-[#203e33]/65">This space will hold your short preparation videos, ingredient education and workshop sequence. V1 includes production-ready content slots without overbuilding a full LMS.</p><div className="mt-10 grid gap-5 lg:grid-cols-[1.2fr_.8fr]"><section className="card rounded-3xl p-7"><div className="flex items-center gap-3"><PlayCircle className="h-6 w-6 text-[#b9785b]"/><h2 className="text-lg font-semibold">Before the workshop</h2></div><div className="mt-6 grid gap-4 sm:grid-cols-2">{['Welcome to Conditioner Edition','How to read your Blend Brief','Your workstation setup','Understanding the Performance Edit'].map((x,i)=><div key={x} className="rounded-2xl border border-[#203e33]/10 bg-white/55 p-5"><div className="grid aspect-video place-items-center rounded-xl bg-[#203e33] text-white/75"><PlayCircle className="h-9 w-9"/></div><div className="mt-4 text-[10px] font-bold uppercase tracking-[.16em] text-[#203e33]/45">Video placeholder · {i+1}</div><h3 className="mt-1 font-semibold">{x}</h3><p className="mt-2 text-sm leading-6 text-[#203e33]/55">Replace this placeholder with the final hosted video URL or embedded player when content is ready.</p></div>)}</div></section><aside className="space-y-5"><div className="card rounded-3xl p-7"><PackageCheck className="h-6 w-6 text-[#b9785b]"/><h2 className="mt-6 text-lg font-semibold">Preparation checklist</h2><ul className="mt-4 space-y-3 text-sm leading-6 text-[#203e33]/65"><li>□ Review your Hair Need result</li><li>□ Read your Blend Brief</li><li>□ Prepare a clean workspace</li><li>□ Keep your workshop kit/components together</li><li>□ Have a notebook or digital notes ready</li></ul></div><div className="rounded-3xl bg-[#e8ddc9] p-7"><Beaker className="h-6 w-6 text-[#b9785b]"/><h2 className="mt-6 font-semibold">Performance Edit</h2><p className="mt-3 text-sm leading-6 text-[#203e33]/65">D-Panthenol · Polyquaternium-7 · Sodium PCA · Hydrolyzed Rice Protein · Silk Amino Acids</p><div className="mt-4 flex gap-2 rounded-xl bg-white/50 p-3 text-xs leading-5 text-[#203e33]/65"><ShieldCheck className="h-4 w-4 shrink-0"/>Protein options are taught as informed choices, not universal additions.</div></div></aside></div></div>}
+const videos = ['Welcome to Conditioner Edition', 'How to read your Blend Brief', 'Your workstation setup', 'Understanding the Performance Edit']
+const checklist = ['Review your Hair Need result', 'Read your Blend Brief', 'Prepare a clean workspace', 'Keep your workshop kit together', 'Have a notebook or digital notes ready']
+
+export default async function Page() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) redirect('/login')
+  if (!await getConditionerEntitlement(user.id)) redirect('/my-blend-bar')
+
+  return (
+    <>
+      <section className="surface border-b border-[var(--rule)]">
+        <div className="shell py-16 sm:py-20">
+          <p className="eyebrow">Conditioner Edition</p>
+          <span aria-hidden className="rule-gold mt-5" />
+          <h1 className="display mt-7 max-w-3xl text-[2.5rem] leading-[1.05] sm:text-[3.5rem]">Prepare first. Blend with intention.</h1>
+          <p className="muted mt-5 max-w-3xl leading-8">
+            This space will hold your short preparation videos, ingredient education and workshop sequence.
+          </p>
+        </div>
+      </section>
+
+      <section data-surface="clean" className="surface">
+        <div className="shell grid gap-12 py-16 lg:grid-cols-[1.25fr_.75fr] sm:py-20">
+          <div>
+            <h2 className="eyebrow">Before the workshop</h2>
+            <div className="mt-8 grid gap-8 sm:grid-cols-2">
+              {videos.map((title, i) => (
+                <article key={title}>
+                  <div data-surface="deep" className="surface grid aspect-video place-items-center" style={{ borderRadius: 'var(--radius)' }}>
+                    <PlayCircle aria-hidden className="h-10 w-10 text-[var(--ivory)]" />
+                  </div>
+                  <p className="eyebrow mt-5">Video placeholder · {String(i + 1).padStart(2, '0')}</p>
+                  <h3 className="display mt-2 text-lg">{title}</h3>
+                  <p className="muted mt-2 text-sm leading-6">Replace this placeholder with the final hosted video when content is ready.</p>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <aside className="space-y-10">
+            <div>
+              <PackageCheck aria-hidden className="h-6 w-6 text-[var(--green)]" />
+              <h2 className="display mt-5 text-xl">Preparation checklist</h2>
+              <ul className="muted mt-5 border-t border-[var(--rule)] text-sm">
+                {checklist.map((item) => <li key={item} className="border-b border-[var(--rule)] py-3">{item}</li>)}
+              </ul>
+            </div>
+            <div className="border-l border-[var(--gold)] pl-6">
+              <Beaker aria-hidden className="h-6 w-6 text-[var(--gold)]" />
+              <h2 className="display mt-5 text-xl">Performance Edit</h2>
+              <p className="muted mt-3 text-sm leading-6">D-Panthenol · Polyquaternium-7 · Sodium PCA · Hydrolyzed Rice Protein · Silk Amino Acids</p>
+              <p className="muted mt-5 flex gap-3 text-xs leading-5">
+                <ShieldCheck aria-hidden className="h-4 w-4 shrink-0" />
+                Protein options are taught as informed choices, not universal additions.
+              </p>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </>
+  )
+}

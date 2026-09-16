@@ -3,23 +3,134 @@ import { PublicNav } from '@/components/public-nav'
 import { Footer } from '@/components/footer'
 import { Button } from '@/components/ui/button'
 
-const steps = [
-  ['1', 'Understand your hair', 'Complete the Hair Need Assessment to explore how your hair behaves and what it may need now.'],
-  ['2', 'Receive your Blend Brief', 'Translate your Hair Characteristics and Current Condition into a guided, customer-safe formulation direction.'],
-  ['3', 'Learn before you blend', 'Understand the role of the base, performance ingredients and informed choices before the workshop begins.'],
-  ['4', 'Create with intention', 'Follow the Conditioner Edition experience with a clearer reason behind every selection.'],
+const steps: [string, string, string][] = [
+  ['01', 'Understand your hair', 'Complete the Hair Need Journey to explore how your hair behaves and what it may need now.'],
+  ['02', 'Receive your Blend Brief', 'Translate your Hair Characteristics and Current Condition into a guided formulation direction.'],
+  ['03', 'Learn before you blend', 'Understand the role of the base, performance ingredients and informed choices before the workshop begins.'],
+  ['04', 'Create with intention', 'Follow the Conditioner Edition experience with a clearer reason behind every selection.'],
 ]
 
-export default function HomePage(){return <>
-  <PublicNav/>
-  <main>
-    <section className="overflow-hidden border-b border-[#203e33]/10"><div className="shell grid min-h-[690px] items-center gap-12 py-20 lg:grid-cols-[1.05fr_.95fr]">
-      <div><div className="eyebrow mb-5">Conditioner Edition · V1</div><h1 className="display max-w-3xl text-5xl leading-[1.02] tracking-[-.03em] sm:text-6xl lg:text-7xl">Formulate with a reason, not a recipe.</h1><p className="mt-7 max-w-2xl text-lg leading-8 text-[#203e33]/75">The Blend Bar is a guided formulation experience that helps you understand what your hair is communicating, learn how selected cosmetic ingredients behave, and build a conditioner with intention.</p><div className="mt-8 flex flex-col gap-3 sm:flex-row"><Button href="/signup">Enter The Blend Bar <ArrowRight className="ml-2 h-4 w-4"/></Button><Button href="#experience" variant="secondary">Explore the experience</Button></div><p className="mt-5 text-xs uppercase tracking-[.14em] text-[#203e33]/50">No hair typing. No ethnicity-based assumptions. No one-size-fits-all formula.</p></div>
-      <div className="relative"><div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#c69d58]/15 blur-3xl"/><div className="card relative rounded-[36px] p-6 sm:p-8"><div className="rounded-[28px] bg-[#203e33] p-8 text-[#fffdf8]"><div className="flex items-center justify-between"><span className="text-xs uppercase tracking-[.18em] text-white/65">Your guided pathway</span><FlaskConical className="h-5 w-5 text-[#d8bd8a]"/></div><div className="display mt-16 text-4xl">Hair Need → Blend Brief → Conditioner</div><div className="mt-10 grid gap-3 sm:grid-cols-2">{['Hair Characteristics','Current Condition','Hair Need','Blend Brief'].map((x,i)=><div key={x} className="rounded-2xl border border-white/10 bg-white/5 p-4"><span className="text-[10px] uppercase tracking-[.18em] text-white/45">0{i+1}</span><p className="mt-2 text-sm">{x}</p></div>)}</div></div><div className="mt-5 flex items-center gap-3 rounded-2xl bg-[#fffdf8] p-4 text-sm text-[#203e33]/75"><ShieldCheck className="h-5 w-5 shrink-0 text-[#203e33]"/>Your result explains the direction. Our internal methodology stays protected.</div></div></div>
-    </div></section>
-    <section id="experience" className="shell py-24"><div className="max-w-2xl"><div className="eyebrow">The experience</div><h2 className="display mt-4 text-4xl sm:text-5xl">More than a workshop. A smarter way to make choices.</h2></div><div className="mt-12 grid gap-5 md:grid-cols-2">{steps.map(([n,t,d])=><article key={n} className="card rounded-3xl p-7"><span className="display text-3xl text-[#b9785b]">{n}</span><h3 className="mt-6 text-lg font-semibold">{t}</h3><p className="mt-3 leading-7 text-[#203e33]/65">{d}</p></article>)}</div></section>
-    <section id="conditioner" className="bg-[#203e33] py-24 text-[#fffdf8]"><div className="shell grid gap-12 lg:grid-cols-[.9fr_1.1fr]"><div><div className="text-xs font-bold uppercase tracking-[.18em] text-[#d8bd8a]">Conditioner Edition</div><h2 className="display mt-4 text-4xl sm:text-5xl">Start with the base. Edit performance with purpose.</h2><p className="mt-6 max-w-xl leading-8 text-white/70">The Performance Edit is deliberately focused. You will learn what each option contributes, where restraint matters, and why “more” is not automatically “better.”</p></div><div className="grid gap-4 sm:grid-cols-2">{['D-Panthenol','Polyquaternium-7','Sodium PCA','Hydrolyzed Rice Protein','Silk Amino Acids'].map((x,i)=><div className="rounded-2xl border border-white/10 bg-white/5 p-5" key={x}><span className="text-[10px] uppercase tracking-[.16em] text-white/40">Performance Edit {String(i+1).padStart(2,'0')}</span><h3 className="mt-2 font-semibold">{x}</h3>{i>2 && <p className="mt-2 text-sm leading-6 text-white/60">Protein option · informed and optional, not automatically required.</p>}</div>)}</div></div></section>
-    <section id="science" className="shell py-24"><div className="grid gap-5 lg:grid-cols-3">{[[Beaker,'Science-led','Ingredient education is grounded in cosmetic function, not trends or simplistic ingredient labels.'],[BookOpen,'Accessible','We translate technical ideas into language you can actually use when making choices.'],[Sparkles,'Personalised direction','Hair Need is based on reported behaviour and current condition, not race, ethnicity or traditional hair type.']].map(([Icon,t,d])=><div className="card rounded-3xl p-7" key={String(t)}><Icon className="h-6 w-6 text-[#b9785b]"/><h3 className="mt-8 text-lg font-semibold">{String(t)}</h3><p className="mt-3 leading-7 text-[#203e33]/65">{String(d)}</p></div>)}</div></section>
-    <section className="pb-24"><div className="shell rounded-[36px] bg-[#e8ddc9] px-7 py-14 text-center sm:px-14"><div className="eyebrow">Ready when you are</div><h2 className="display mx-auto mt-4 max-w-3xl text-4xl sm:text-5xl">Your conditioner should begin with understanding—not guessing.</h2><div className="mt-8"><Button href="/signup">Create My Blend Bar</Button></div></div></section>
-  </main><Footer/>
-</>}
+const pillars: [typeof Beaker, string, string][] = [
+  [Beaker, 'Science-led', 'Ingredient education is grounded in cosmetic function, not trends or simplistic ingredient labels.'],
+  [BookOpen, 'Accessible', 'We translate technical ideas into language you can actually use when making choices.'],
+  [Sparkles, 'Personalised direction', 'Hair Need is based on reported behaviour and current condition, not race, ethnicity or traditional hair type.'],
+]
+
+export default function HomePage() {
+  return (
+    <>
+      <PublicNav />
+      <main>
+        {/* Hero — deep green presence */}
+        <section data-surface="deep" className="surface">
+          <div className="shell grid items-center gap-16 py-20 lg:grid-cols-[1.05fr_.95fr] sm:py-28">
+            <div>
+              <p className="eyebrow">Conditioner Edition · V1</p>
+              <span aria-hidden className="rule-gold mt-6" />
+              <h1 className="display mt-8 max-w-3xl text-[3rem] leading-[1.02] sm:text-6xl lg:text-[4.75rem]">Formulate with a reason, not a recipe.</h1>
+              <p className="muted mt-8 max-w-2xl text-[1.0625rem] leading-8">
+                The Blend Bar is a guided formulation experience that helps you understand what your hair is communicating, learn how selected cosmetic ingredients behave, and build a conditioner with intention.
+              </p>
+              <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+                <Button href="/signup">Enter The Blend Bar <ArrowRight className="h-4 w-4" /></Button>
+                <Button href="#experience" variant="secondary">Explore the experience</Button>
+              </div>
+              <p className="eyebrow mt-8">No hair typing · No ethnicity-based assumptions · No one-size-fits-all formula</p>
+            </div>
+
+            <div className="border border-[var(--rule)] p-8" style={{ borderRadius: 'var(--radius)' }}>
+              <div className="flex items-center justify-between">
+                <span className="eyebrow">Your guided pathway</span>
+                <FlaskConical aria-hidden className="h-5 w-5 text-[var(--gold)]" />
+              </div>
+              <p className="display mt-12 text-[2rem] leading-tight">Hair Need → Blend Brief → Conditioner</p>
+              <ul className="mt-12 grid gap-px border-t border-[var(--rule)] sm:grid-cols-2">
+                {['Hair Characteristics', 'Current Condition', 'Hair Need', 'Blend Brief'].map((item, i) => (
+                  <li key={item} className="border-b border-[var(--rule)] py-4 sm:pr-6">
+                    <span className="eyebrow">{String(i + 1).padStart(2, '0')}</span>
+                    <p className="mt-2 text-sm">{item}</p>
+                  </li>
+                ))}
+              </ul>
+              <p className="muted mt-10 flex gap-3 text-sm leading-6">
+                <ShieldCheck aria-hidden className="h-5 w-5 shrink-0" />
+                Your result explains the direction. Our internal methodology stays protected.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Experience — editorial breathing space */}
+        <section id="experience" className="surface border-b border-[var(--rule)]">
+          <div className="shell py-20 sm:py-28">
+            <div className="max-w-2xl">
+              <p className="eyebrow">The experience</p>
+              <span aria-hidden className="rule-gold mt-5" />
+              <h2 className="display mt-7 text-[2.25rem] leading-tight sm:text-[3rem]">More than a workshop. A smarter way to make choices.</h2>
+            </div>
+            <ol className="mt-16 grid gap-px border-t border-[var(--rule)] md:grid-cols-2">
+              {steps.map(([number, title, description]) => (
+                <li key={number} className="flex gap-6 border-b border-[var(--rule)] py-10 md:pr-12">
+                  <span aria-hidden className="display text-2xl text-[var(--gold)]">{number}</span>
+                  <div>
+                    <h3 className="display text-xl">{title}</h3>
+                    <p className="muted mt-3 leading-7">{description}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        {/* Conditioner Edition — clean science surface */}
+        <section id="conditioner" data-surface="clean" className="surface border-b border-[var(--rule)]">
+          <div className="shell grid gap-16 py-20 lg:grid-cols-[.9fr_1.1fr] sm:py-28">
+            <div>
+              <p className="eyebrow">Conditioner Edition</p>
+              <span aria-hidden className="rule-gold mt-5" />
+              <h2 className="display mt-7 text-[2.25rem] leading-tight sm:text-[3rem]">Start with the base. Edit performance with purpose.</h2>
+              <p className="muted mt-6 max-w-xl leading-8">
+                The Performance Edit is deliberately focused. You will learn what each option contributes, where restraint matters, and why &ldquo;more&rdquo; is not automatically &ldquo;better&rdquo;.
+              </p>
+            </div>
+            <ul className="grid gap-px border-t border-[var(--rule)] sm:grid-cols-2">
+              {['D-Panthenol', 'Polyquaternium-7', 'Sodium PCA', 'Hydrolyzed Rice Protein', 'Silk Amino Acids'].map((item, i) => (
+                <li key={item} className="border-b border-[var(--rule)] py-6 sm:pr-8">
+                  <span className="eyebrow">Performance Edit {String(i + 1).padStart(2, '0')}</span>
+                  <h3 className="display mt-2 text-lg">{item}</h3>
+                  {i > 2 && <p className="muted mt-2 text-sm leading-6">Protein option · informed and optional, not automatically required.</p>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* Approach */}
+        <section id="science" className="surface">
+          <div className="shell grid gap-px border-t border-[var(--rule)] py-20 lg:grid-cols-3 sm:py-24">
+            {pillars.map(([Icon, title, description]) => (
+              <div key={title} className="border-b border-[var(--rule)] py-10 lg:pr-12">
+                <Icon aria-hidden className="h-6 w-6 text-[var(--green)]" />
+                <h3 className="display mt-8 text-xl">{title}</h3>
+                <p className="muted mt-3 leading-7">{description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Close */}
+        <section data-surface="deep" className="surface">
+          <div className="shell max-w-3xl py-20 text-center sm:py-28">
+            <p className="eyebrow">Ready when you are</p>
+            <span aria-hidden className="rule-gold mx-auto mt-6" />
+            <h2 className="display mt-8 text-[2.25rem] leading-tight sm:text-[3rem]">Your conditioner should begin with understanding — not guessing.</h2>
+            <div className="mt-10 flex justify-center">
+              <Button href="/signup">Create My Blend Bar<ArrowRight className="h-4 w-4" /></Button>
+            </div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </>
+  )
+}
